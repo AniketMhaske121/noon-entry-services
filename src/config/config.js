@@ -2,7 +2,7 @@ const Pool=require('pg').Pool;
 const pool=new Pool({
     user:'postgres',
     password:'postgres',
-    database:"local_orion_db",
+    database:"postgres",
     host:'localhost',
     port:5432
 });

@@ -18,7 +18,8 @@ exports.register = async (req, res) => {
         }
         
         else {
-            bcrypt.hash(password, 10, (err, hash) => {
+            bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt, (err, hash) => {
                 if (err)
                     res.status(err).json({
                         error: "Server error",
@@ -57,6 +58,7 @@ exports.register = async (req, res) => {
                     );
                 };
             });
+        })
         }
     }
     catch (err) {

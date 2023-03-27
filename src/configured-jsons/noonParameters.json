@@ -1,0 +1,56 @@
+{
+ "Vessel Info":[
+        {
+            "label":"Vessel Name",
+            "value":"Vessel_Name"
+        },
+        {
+            "label":"Report Date",
+            "value":"Noon_Report_Date"
+        },
+         {
+            "label":"Report Type",
+            "value":"Report_Type"
+        }
+    ],
+    
+ "Location Info":[
+        {
+            "label":"Lat",
+            "value":"Vessel_Position_Lat"
+        },
+         {
+            "label":"Longitude",
+            "value":"Vessel_Position_Long"
+        }
+    ],
+    "ROB Info":[
+        {
+            "label":"HFO",
+            "value":"Remaining_On_Board_HFO_In_MT"
+        },
+         {
+            "label":"VLSFO",
+            "value":"Fuel_ROB_VLFSO"
+        },
+      
+         {
+            "label":"VLSGO",
+            "value":"Remaining_On_Board_VLSGO_In_MT"
+        },
+        {
+            "label":"ULSGO",
+            "value":"Remaining_On_Board_ULSGO_In_MT"
+        }
+    ],
+    "L.O ROB":[
+        {
+            "label": "MECYL. OIL",
+            "value": "Remaining_On_Board_MECYL_In_MT"
+          },
+          {
+            "label": "MELSCYL. OIL",
+            "value": "Remaining_On_Board_LSMECYL_In_MT"
+          }
+    ]
+}
