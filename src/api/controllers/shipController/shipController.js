@@ -106,13 +106,7 @@ exports.updateShipById = async (req, res) => {
     const { ship_name, mapping_name, company_name, registerBy, category, registerContry } = req.body;
 
     try {
-        // const data = await client.query(`SELECT * FROM noonships WHERE mapping_name= $1;`, [mapping_name]); //Checking if user already exists
-        // const arr = data.rows;
-        // if (arr.length != 0) {
-        //     return res.status(400).json({
-        //         error: "ship already there, No need to register again.",
-        //     });
-        // } else {
+       
             let timestamp = new Date().toISOString()
             const ship = {
                 ship_name,

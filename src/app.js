@@ -1,5 +1,5 @@
 const  express  =  require("express");
-const createTables=require("./api/serverStartup")
+const createTables=require("./serverStartup")
 const app = express(); //Initialized express
 const  user  =  require("./api/routes/user/userRoutes");
 const noon=require("./api/routes/noonReportRoutes/noonEntryRoute")

@@ -1,0 +1,16 @@
+{
+"Report_Types":[
+    {
+        "label":"Depature Report",
+        "value":"Depature Report"
+     },
+     {
+        "label":"Noon Report",
+        "value":"Noon Report"
+     },
+     {
+        "label":"Arrival Report",
+        "value":"Arrival Report"
+     }
+]
+}
