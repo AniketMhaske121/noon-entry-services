@@ -106,37 +106,37 @@ exports.updateShipById = async (req, res) => {
     const { ship_name, mapping_name, company_name, registerBy, category, registerContry } = req.body;
 
     try {
-       
-            let timestamp = new Date().toISOString()
-            const ship = {
-                ship_name,
-                mapping_name,
-                company_name,
-                registerBy,
-                category,
-                registerContry,
-                timestamp
-            };
 
-            var flag = 1; //Declaring a flag
+        let timestamp = new Date().toISOString()
+        const ship = {
+            ship_name,
+            mapping_name,
+            company_name,
+            registerBy,
+            category,
+            registerContry,
+            timestamp
+        };
 
-            let query=`update noonships set shipname=${ship.ship_name},mapping_name=${ship.mapping_name }`
-            client
-                .query(`UPDATE noonships set(shipname,mapping_name, company_name, register_by, category,registered_country,created_date
+        var flag = 1; //Declaring a flag
+
+        let query = `update noonships set shipname=${ship.ship_name},mapping_name=${ship.mapping_name}`
+        client
+            .query(`UPDATE noonships set(shipname,mapping_name, company_name, register_by, category,registered_country,created_date
                         ) VALUES ($1,$2,$3,$4,$5,$6,$7) where vesselid=${id} `, [ship.ship_name, ship.mapping_name, ship.company_name, ship.registerBy, ship.category, ship.registerContry, ship.timestamp], (err) => {
 
-                    if (err) {
-                        flag = 0; //If user is not inserted is not inserted to database assigning flag as 0/false.
-                        console.error(err);
-                        return res.status(500).json({
-                            error: "Database error"
-                        })
-                    }
-                    else {
-                        flag = 1;
-                        res.status(200).send({ message: 'Ship Updated succefully Succesfully' });
-                    }
-                })
+                if (err) {
+                    flag = 0; //If user is not inserted is not inserted to database assigning flag as 0/false.
+                    console.error(err);
+                    return res.status(500).json({
+                        error: "Database error"
+                    })
+                }
+                else {
+                    flag = 1;
+                    res.status(200).send({ message: 'Ship Updated succefully Succesfully' });
+                }
+            })
         // }
 
     } catch (error) {
