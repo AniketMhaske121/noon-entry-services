@@ -9,6 +9,4 @@ router.post('/saveNoonTemplateData', saveTemplateData)
 router.post('/getFormDataByShipName', getFormDataByShipName)
 router.post('/getTemplateData', getTemplateData)
 
-
-
 module.exports = router;

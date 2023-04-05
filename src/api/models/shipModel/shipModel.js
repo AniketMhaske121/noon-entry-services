@@ -1,24 +1,20 @@
 const pool = require("../../../config/config");
+const db = require("../../../config/config");
 
 const createShipTable=async()=>{
-    const query=`create table noonships
-        (
-            vesselid serial primary key,
-            mapping_name  varchar,
-            shipname varchar,
-            company_name varchar,
-            created_date date, 
-            register_by varchar,
-            category varchar,
-            registered_country varchar
-             )`
-
-   await pool.query(query).then(res=>{
-    console.log("Table created successfully")
-   }).catch((erro)=>{
-    // console.log(erro)
-   })
-}
+    const query = `CREATE TABLE IF NOT EXISTS noonships
+                     (
+                        vesselid INTEGER PRIMARY KEY AUTOINCREMENT,
+                        mapping_name  TEXT type UNIQUE,
+                        shipname TEXT,
+                        company_name TEXT,
+                        created_date TEXT, 
+                        register_by TEXT,
+                        category TEX,
+                        registered_country TEXT
+                    )`;
+      db.run(query,[],(err)=>{if(err) return console.error(err)})
+ }
 module.exports={
     createShipTable:createShipTable
 }

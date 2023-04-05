@@ -1,6 +1,7 @@
 const noonReportParameter = require("../../../configured-jsons/noonParameters.json")
 const noonTypes = require("../../../configured-jsons/reporttype.json")
 const client = require("../../../config/config");
+const db = require("../../../config/config");
 
 exports.fetchjson = async (req, res) => {
     try {
@@ -15,17 +16,13 @@ exports.fetchjson = async (req, res) => {
 
 
 exports.saveTemplateData = async (req, res) => {
-    const { template_type, template_data, created_by, vessel_name, isDefualt } = req.body;
-
+    const { template_type, template_data, created_by, vessel_name, isDefault } = req.body;
+    let strigifiedTemplateData = JSON.stringify(template_data)
     try {
 
-        let query = (`INSERT INTO noonentrytemplatedata (template_type,template_data,created_by,vessel_names, isdefault
-                ) VALUES ($1,$2,$3,$4,$5);`, [template_type, template_data, created_by, vessel_name, isDefualt])
-
-        var flag = 1; //Declaring a flag
-        client
-            .query(`INSERT INTO noonentrytemplatedata (template_type,template_data,created_by,vessel_names, isdefault
-            ) VALUES ($1,$2,$3,$4,$5);`, [template_type, template_data, created_by, vessel_name, isDefualt], (err) => {
+        let flag = 1; //Declaring a flag
+        db.run(`INSERT INTO noonentrytemplatedata (template_type,template_data,created_by,vessel_names,isdefault)     
+            VALUES (?,?,?,?,?);`, [template_type, strigifiedTemplateData, created_by, vessel_name, isDefault], (err) => {
 
                 if (err) {
                     flag = 0; //If user is not inserted is not inserted to database assigning flag as 0/false.
@@ -49,7 +46,7 @@ exports.saveTemplateData = async (req, res) => {
 
 exports.getAllships = async (req, res) => {
 
-    client.query(`SELECT * FROM noonships ORDER BY vesselid ASC`, (err, data) => {
+    db.all(`SELECT * FROM noonships ORDER BY vesselid ASC`, [],(err, data) => {
         if (err) {
             flag = 0; //If user is not inserted is not inserted to database assigning flag as 0/false.
             console.error(err);
@@ -59,7 +56,7 @@ exports.getAllships = async (req, res) => {
         }
         else {
             flag = 1;
-            res.status(200).send({ message: 'Fetched All Ship Succesfully', data: data.rows });
+            res.status(200).send({ message: 'Fetched All Ship Succesfully', data: data });
         }
     })
 
@@ -69,7 +66,7 @@ exports.getTemplateData = async (req, res) => {
     const { template_type, vessel_names } = req.body
     console.log("template_type: ", template_type)
 
-    client.query(`SELECT template_data  FROM noonentrytemplatedata  WHERE template_type ='${template_type}' AND vessel_names= '${vessel_names}'`, (err, data) => {
+    db.get(`SELECT template_data  FROM noonentrytemplatedata  WHERE template_type = ? AND vessel_names= ?`,[template_type,vessel_names], (err, data) => {
         if (err) {
             flag = 0; //If user is not inserted  is not inserted to database assigning flag as 0/false.
             console.error(err);
@@ -78,8 +75,13 @@ exports.getTemplateData = async (req, res) => {
             })
         }
         else {
+            if(data === undefined) 
+                return res.status(404).send({message : "No report found."})
+            let jsonData = JSON.parse(data.template_data)
+            
+            console.log(jsonData)
             flag = 1;
-            res.status(200).send({ message: 'Fetched template data succesfully', data: data.rows });
+            res.status(200).send({ message: 'Fetched template data succesfully', data: jsonData });
         }
     })
 
@@ -87,7 +89,7 @@ exports.getTemplateData = async (req, res) => {
 
 exports.getFormDataByShipName = async (req, res) => {
     const { ship_name, report_type } = req.body
-    client.query(`SELECT * FROM noonentrytemplatedata where vessel_names='${ship_name}' and template_type='${report_type}'`, (err, data) => {
+    db.all(`SELECT * FROM noonentrytemplatedata where vessel_names='${ship_name}' and template_type='${report_type}'`,[],(err, data) => {
         if (err) {
             flag = 0; //If user is not inserted is not inserted to database assigning flag as 0/false.
             console.error(err);
@@ -97,7 +99,7 @@ exports.getFormDataByShipName = async (req, res) => {
         }
         else {
             flag = 1;
-            res.status(200).send({ message: 'Fetched Form Data Succesfully', data: data.rows });
+            res.status(200).send({ message: 'Fetched Form Data Succesfully', data: data });
         }
     })
 

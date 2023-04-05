@@ -1,23 +1,16 @@
-const pool = require('../../../config/config');
+const db = require("../../../config/config");
 
 const createUserTable=async()=>{
-    const query=`create table users
+    const query=`CREATE TABLE IF NOT EXISTS users
         (
-            id serial primary key,
-            email varchar,
-            name varchar,
-            phonenumber varchar,
-            password varchar
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT type UNIQUE,
+            name TEXT,
+            phonenumber TEXT,
+            password TEXT
              )`
 
-   await pool.query(query).then(res=>{
-    console.log("Table created successfully")
-   }).catch((erro)=>{
-    // console.log(erro)
-   })
-          
-    
- 
+   db.run(query,[],(err)=>{if(err) return console.error(err)})
   
 }
 module.exports={
